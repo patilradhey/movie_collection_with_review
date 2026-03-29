@@ -1,35 +1,40 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { MovieProvider } from "./components/MovieContext";
+import MovieList from "./components/MovieList";
+import AddMovie from "./components/AddMovie";
+import MovieDetails from "./components/MovieDetails";
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <MovieProvider>
+      <BrowserRouter>
+        <div className="container app-container ">
+
+          <div className=" d-flex justify-content-between align-items-center mb-4 bg-light rounded">
+            <span className="text-dark fw-bold fs-4">🎬 Movie Collection</span>
+
+            <div>
+              <Link to="/" className="btn btn-outline-dark me-2">
+                Movie List
+              </Link>
+
+              <Link to="/add" className="btn btn-warning">
+                Add Movie
+              </Link>
+            </div>
+          </div>
+          <h1 className="text-center text-dark mb-4">Welcome to Movie Collection</h1>
+
+          <Routes>
+            <Route path="/" element={<MovieList />} />
+            <Route path="/add" element={<AddMovie />} />
+            <Route path="/movie/:id" element={<MovieDetails />} />
+          </Routes>
+
+        </div>   
+      </BrowserRouter>
+    </MovieProvider>
+  );
 }
 
-export default App
+export default App;
